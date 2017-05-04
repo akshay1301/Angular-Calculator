@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html ng-app="CalculatorApp">
+<head>
+	<title>Calculator in AngularJS</title>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>	
+</head>
+<body align="center">
+	<h2>Calculator in AngularJS</h2>
+	<div ng-controller="calcCtrl">
+		
+		<p>	A = <input type="number" ng-model="a">
+			B = <input type="number" ng-model="b">
+		</p>
+		
+		<table align="center">
+			<tr>
+				<td><input ng-click="onClickOperator('+')" type="button" name="plus" value="+"></td>
+				<td><input ng-click="onClickOperator('-')" type="button" name="minus" value="-"></td>
+			</tr>
+			<tr>
+				<td><input ng-click="onClickOperator('*')" type="button" name="multiply" value="*"></td>
+				<td><input ng-click="onClickOperator('/')" type="button" name="divide" value="/"></td>
+			</tr>
+		</table>
+		<p>Result: {{a}} {{operator}} {{b}} = {{result}}</p>
+
+	</div>
+</body>
+
+<script type="text/javascript">
+
+(function(){
+
+	var app = angular.module("CalculatorApp", [])
+	.controller("calcCtrl", function($scope){
+		console.log("calcCtrl has been loaded!");
+
+		$scope.result = 0;
+		$scope.operator = null;
+
+			$scope.onClickOperator = function(op){
+				$scope.operator = op;
+				console.log("Operator is ", $scope.operator);
+					if($scope.operator === '+')
+						$scope.result = ($scope.a + $scope.b);
+					else if($scope.operator === '-')
+						$scope.result = ($scope.a - $scope.b);
+					else if($scope.operator === '*')
+						$scope.result = ($scope.a * $scope.b);
+					else if($scope.operator === '/')
+						$scope.result = ($scope.a / $scope.b);
+			};
+
+
+	});
+
+})();	
+</script>
+
+</html>
