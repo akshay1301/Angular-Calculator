@@ -7,20 +7,19 @@
 
 <body align="center">
 	<h2>Calculator in AngularJS</h2>
-	<div ng-controller="calcCtrl">
-		
-		<p>	A = <input type="number" ng-model="a" required>
-			B = <input type="number" ng-model="b" required>
+	<div ng-controller="calcCtrl">	
+		<p>	A = <input type="number" ng-model="a" ng-change="inputValidation()" required>
+			B = <input type="number" ng-model="b" ng-change="inputValidation()" required>
 		</p>
 		
 		<table align="center">
 			<tr>
-				<td><input ng-click="onClickOperator('+')" type="button" name="plus" value="+"></td>
-				<td><input ng-click="onClickOperator('-')" type="button" name="minus" value="-"></td>
+				<td><input ng-click="onClickOperator('+')" ng-disabled="inputValidation()" type="button" name="plus" value="+"></td>
+				<td><input ng-click="onClickOperator('-')" ng-disabled="inputValidation()" type="button" name="minus" value="-"></td>
 			</tr>
 			<tr>
-				<td><input ng-click="onClickOperator('*')" type="button" name="multiply" value="*"></td>
-				<td><input ng-click="onClickOperator('/')" type="button" name="divide" value="/"></td>
+				<td><input ng-click="onClickOperator('*')" ng-disabled="inputValidation()" type="button" name="multiply" value="*"></td>
+				<td><input ng-click="onClickOperator('/')" ng-disabled="inputValidation()" type="button" name="divide" value="/"></td>
 			</tr>
 			<tr>
 				<td colspan="2"><input ng-click="onClickClear()" type="button" name="clear" value="Clear"></td>
@@ -61,8 +60,13 @@
 				$scope.result = 0;
 				$scope.operator = null;
 			};
-
+			
 			$scope.inputValidation = function () {
+
+				if(($scope.a === null) || ($scope.b === null))
+					return false;
+				else
+					return true;
 			};
 
 
