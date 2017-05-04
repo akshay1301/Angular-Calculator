@@ -4,12 +4,13 @@
 	<title>Calculator in AngularJS</title>
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>	
 </head>
+
 <body align="center">
 	<h2>Calculator in AngularJS</h2>
 	<div ng-controller="calcCtrl">
 		
-		<p>	A = <input type="number" ng-model="a">
-			B = <input type="number" ng-model="b">
+		<p>	A = <input type="number" ng-model="a" required>
+			B = <input type="number" ng-model="b" required>
 		</p>
 		
 		<table align="center">
@@ -20,6 +21,9 @@
 			<tr>
 				<td><input ng-click="onClickOperator('*')" type="button" name="multiply" value="*"></td>
 				<td><input ng-click="onClickOperator('/')" type="button" name="divide" value="/"></td>
+			</tr>
+			<tr>
+				<td colspan="2"><input ng-click="onClickClear()" type="button" name="clear" value="Clear"></td>
 			</tr>
 		</table>
 		<p>Result: {{a}} {{operator}} {{b}} = {{result}}</p>
@@ -49,6 +53,16 @@
 						$scope.result = ($scope.a * $scope.b);
 					else if($scope.operator === '/')
 						$scope.result = ($scope.a / $scope.b);
+			};
+
+			$scope.onClickClear = function () {
+				$scope.a = null;
+				$scope.b = null;
+				$scope.result = 0;
+				$scope.operator = null;
+			};
+
+			$scope.inputValidation = function () {
 			};
 
 
