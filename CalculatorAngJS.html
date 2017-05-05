@@ -11,6 +11,7 @@
 		<p>	A = <input type="number" ng-model="a" ng-change="inputValidation()" required>
 			B = <input type="number" ng-model="b" ng-change="inputValidation()" required>
 		</p>
+		<p ng-show="notValid">Please enter value for A and B</p>
 		
 		<table align="center">
 			<tr>
@@ -26,7 +27,6 @@
 			</tr>
 		</table>
 		<p ng-show="showResult">Result: {{a}} {{operator}} {{b}} = {{result}}</p>
-
 	</div>
 </body>
 
@@ -36,42 +36,48 @@
 
 	var app = angular.module("CalculatorApp", [])
 	.controller("calcCtrl", function($scope){
-		console.log("calcCtrl has been loaded!");
-
-
-		$scope.init = function () {
+		
+		//Initialisation function: called on Page load and on clicking Clear button
+		$scope.init = function init() {
 			$scope.a = null;
 			$scope.b = null;
 			$scope.result = 0;
 			$scope.operator = null;
 			$scope.notValid = true;
 			$scope.showResult = false;
-
-
 		};
-			$scope.onClickOperator = function(op){
-				$scope.operator = op;
-				console.log("Operator is ", $scope.operator);
-					if($scope.operator === '+')
-						$scope.result = ($scope.a + $scope.b);
-					else if($scope.operator === '-')
-						$scope.result = ($scope.a - $scope.b);
-					else if($scope.operator === '*')
-						$scope.result = ($scope.a * $scope.b);
-					else if($scope.operator === '/')
-						$scope.result = ($scope.a / $scope.b);
-					$scope.showResult = true;
-			};
+		
+		//Performs calculations and updates value for result. 
+		//showResult flag hides Result till an operator is passed
+		$scope.onClickOperator = function onClickOperator(op){
+			$scope.operator = op;
+			//console.log("Operator is ", $scope.operator);
+			switch($scope.operator){
+				case '+': $scope.result = ($scope.a + $scope.b);
+				break;
+				case '-': $scope.result = ($scope.a - $scope.b);
+				break;
+				case '*': $scope.result = ($scope.a * $scope.b);
+				break;
+				case '/': $scope.result = ($scope.a / $scope.b);
+				break;
+			}
+			$scope.showResult = true;
+		};
 
-			
-			$scope.inputValidation = function () {
-				console.log("Inside input Validation");
-				if(($scope.a != null) && ($scope.b != null))
-					$scope.notValid = false;
-				else
-					$scope.notValid = true;
-				$scope.showResult = false;
-			};
+		//Updates notValid flag for input required validation
+		//Updates showResult flag to false so that result is hidden unless an operator is passed
+		$scope.inputValidation = function () {
+			//console.log("Inside input Validation");
+			if(($scope.a != null) && ($scope.b != null)){
+				$scope.notValid = false;
+			}
+			else{
+				$scope.notValid = true;
+			}				
+				
+			$scope.showResult = false;
+		};
 
 
 	});
