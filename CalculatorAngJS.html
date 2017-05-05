@@ -7,25 +7,25 @@
 
 <body align="center">
 	<h2>Calculator in AngularJS</h2>
-	<div ng-controller="calcCtrl">	
+	<div ng-controller="calcCtrl" ng-init="init()">	
 		<p>	A = <input type="number" ng-model="a" ng-change="inputValidation()" required>
 			B = <input type="number" ng-model="b" ng-change="inputValidation()" required>
 		</p>
 		
 		<table align="center">
 			<tr>
-				<td><input ng-click="onClickOperator('+')" ng-disabled="inputValidation()" type="button" name="plus" value="+"></td>
-				<td><input ng-click="onClickOperator('-')" ng-disabled="inputValidation()" type="button" name="minus" value="-"></td>
+				<td><input ng-click="onClickOperator('+')" ng-disabled="notValid" type="button" name="plus" value="+"></td>
+				<td><input ng-click="onClickOperator('-')" ng-disabled="notValid" type="button" name="minus" value="-"></td>
 			</tr>
 			<tr>
-				<td><input ng-click="onClickOperator('*')" ng-disabled="inputValidation()" type="button" name="multiply" value="*"></td>
-				<td><input ng-click="onClickOperator('/')" ng-disabled="inputValidation()" type="button" name="divide" value="/"></td>
+				<td><input ng-click="onClickOperator('*')" ng-disabled="notValid" type="button" name="multiply" value="*"></td>
+				<td><input ng-click="onClickOperator('/')" ng-disabled="notValid" type="button" name="divide" value="/"></td>
 			</tr>
 			<tr>
-				<td colspan="2"><input ng-click="onClickClear()" type="button" name="clear" value="Clear"></td>
+				<td colspan="2"><input ng-click="init()" type="button" name="clear" value="Clear"></td>
 			</tr>
 		</table>
-		<p>Result: {{a}} {{operator}} {{b}} = {{result}}</p>
+		<p ng-show="showResult">Result: {{a}} {{operator}} {{b}} = {{result}}</p>
 
 	</div>
 </body>
@@ -38,9 +38,17 @@
 	.controller("calcCtrl", function($scope){
 		console.log("calcCtrl has been loaded!");
 
-		$scope.result = 0;
-		$scope.operator = null;
 
+		$scope.init = function () {
+			$scope.a = null;
+			$scope.b = null;
+			$scope.result = 0;
+			$scope.operator = null;
+			$scope.notValid = true;
+			$scope.showResult = false;
+
+
+		};
 			$scope.onClickOperator = function(op){
 				$scope.operator = op;
 				console.log("Operator is ", $scope.operator);
@@ -52,21 +60,17 @@
 						$scope.result = ($scope.a * $scope.b);
 					else if($scope.operator === '/')
 						$scope.result = ($scope.a / $scope.b);
+					$scope.showResult = true;
 			};
 
-			$scope.onClickClear = function () {
-				$scope.a = null;
-				$scope.b = null;
-				$scope.result = 0;
-				$scope.operator = null;
-			};
 			
 			$scope.inputValidation = function () {
-
-				if(($scope.a === null) || ($scope.b === null))
-					return false;
+				console.log("Inside input Validation");
+				if(($scope.a != null) && ($scope.b != null))
+					$scope.notValid = false;
 				else
-					return true;
+					$scope.notValid = true;
+				$scope.showResult = false;
 			};
 
 
