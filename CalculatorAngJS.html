@@ -5,28 +5,79 @@
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>	
 </head>
 
-<body align="center">
-	<h2>Calculator in AngularJS</h2>
-	<div ng-controller="calcCtrl" ng-init="init()">	
-		<p>	A = <input type="number" ng-model="a" ng-change="inputValidation()" required>
-			B = <input type="number" ng-model="b" ng-change="inputValidation()" required>
-		</p>
-		<p ng-show="notValid">Please enter value for A and B</p>
-		
-		<table align="center">
-			<tr>
-				<td><input ng-click="onClickOperator('+')" ng-disabled="notValid" type="button" name="plus" value="+"></td>
-				<td><input ng-click="onClickOperator('-')" ng-disabled="notValid" type="button" name="minus" value="-"></td>
-			</tr>
-			<tr>
-				<td><input ng-click="onClickOperator('*')" ng-disabled="notValid" type="button" name="multiply" value="*"></td>
-				<td><input ng-click="onClickOperator('/')" ng-disabled="notValid" type="button" name="divide" value="/"></td>
-			</tr>
-			<tr>
-				<td colspan="2"><input ng-click="init()" type="button" name="clear" value="Clear"></td>
-			</tr>
-		</table>
-		<p ng-show="showResult">Result: {{a}} {{operator}} {{b}} = {{result}}</p>
+<body align="center" ng-controller="calcCtrl" ng-init="init()">
+	<div class="col-lg-12">
+		<div class= "page-header">
+			<h2>Calculator in Angular JS</h2>
+		</div>
+	</div>
+	<div class= "container-fluid text-center">
+	<!-- Input Line-->
+		<div class="row">
+			<div class="col-md-4"></div>
+			<div class="col-md-2">
+				<div class="input-group">
+				  <input type="number" class="form-control" placeholder="First Number" aria-describedby="basic-addon1" ng-model="a" ng-change="inputValidation()" required>
+				</div>
+			</div>
+			<div class="col-md-2">
+				<div class="input-group">
+				  <input type="number" class="form-control" placeholder="Second Number" aria-describedby="basic-addon1" ng-model="b" ng-change="inputValidation()" required>
+				</div>
+			</div>
+			<div class="col-md-4"></div>
+		</div>
+		<!-- Error message line-->
+		<div class="row">
+			<div class="col-md-4"></div>
+			<div class="col-md-4">
+				<p ng-show="notValid">Please enter values for the two numbers</p>
+			</div>
+			<div class="col-md-4"></div>
+		</div>
+		<!--Calculator Buttons -->
+		<div class="row">
+			<div class="col-md-4"></div>
+			<div class="col-md-2">
+				<div><button ng-click="onClickOperator('+')" ng-disabled="notValid" class="btn btn-block btn-success" type="button">+</button></div>
+			</div>
+			<div class="col-md-2">
+				<div><button ng-click="onClickOperator('-')" ng-disabled="notValid" class="btn btn-block btn-success" type="button">-</button></div>
+			</div>
+			<div class="col-md-4"></div>
+		</div>
+		&nbsp;
+		<div class="row">
+			<div class="col-md-4"></div>
+			<div class="col-md-2">
+				<div><button ng-click="onClickOperator('*')" ng-disabled="notValid" class="btn btn-block btn-success" type="button">X</button></div>
+			</div>
+			<div class="col-md-2">
+				<div><button ng-click="onClickOperator('/')" ng-disabled="notValid" class="btn btn-block btn-success" type="button">/</button></div>
+			</div>
+			<div class="col-md-4"></div>
+		</div>
+		&nbsp;
+		<div class="row">
+			<div class="col-md-4"></div>
+			<div class="col-md-1"></div>
+			<div class="col-md-2">
+				<div><button ng-click="init()" class="btn btn-block btn-warning" type="button">Clear</button></div>
+			</div>
+			<div class="col-md-1"></div>
+			<div class="col-md-4"></div>
+		</div>
+		<!--Result Well -->
+		&nbsp;
+		<div class="row">
+			<div class="col-md-4"></div>
+			<div class="col-md-4">
+				<div class = "well well-md">
+					<p ng-show="showResult">{{a}} {{operator}} {{b}} = {{result}}</p>
+				</div>
+			</div>
+			<div class="col-md-4"></div>
+		</div>
 	</div>
 </body>
 
@@ -84,5 +135,12 @@
 
 })();	
 </script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </html>
