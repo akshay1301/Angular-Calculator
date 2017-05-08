@@ -9,7 +9,7 @@
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>	
 </head>
-<body ng-controller="toDoController as tdctrl">
+<body ng-controller="toDoController as tdctrl" ng-init="init()">
 	<div class= "container-fluid">
 		<div class="page-header text-center">
 			<h1 >To Do List in AngularJS</h1>
@@ -19,11 +19,16 @@
 		<div class="row form-group">
 			<div class="col-md-3"></div>
 			<div class="col-md-6">
-				<form ng-submit="addTask() && reset()">
-					<input ng-model="task" type="text" class="form-control" placeholder="What do you want to do today?" name="task">
-				</form>
+				<input ng-model="task" ng-change="checkInput()" type="text" class="form-control" placeholder="What do you want to do today?" name="task" required>
 			</div>
 			<div class="col-md-3"></div>
+		</div>
+		<div class="row form-group">
+			<div class="col-md-5"></div>
+			<div class="col-md-2">
+				<button ng-disabled="!validInput" ng-click="addTask()" class="btn btn-warning btn-block">Add To Do</button>
+			</div>
+			<div class="col-md-5"></div>
 		</div>
 		<div class="row form-group" ng-repeat="list in toDoList">
 			<div class="col-md-4"></div>
@@ -34,7 +39,8 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-md-4"></div>
+			<div class="col-md-1"><button ng-click="deleteTask($index)" class="btn btn-danger">Remove</button></div>
+			<div class="col-md-3"></div>
 		</div>
 	</div>
 </body>
@@ -44,13 +50,37 @@
 		controller('toDoController',function($scope) {
 			console.log("Controller was loaded !");
 
+			$scope.init = function init(){
+				console.log("Init function called !")
+				$scope.task = null;
+				$scope.validInput = false;
+			};
+
 			$scope.toDoList = [
-			{action:'Create an AngulaJS Web App',status:false},
-			{action:'Learn Python',status:true}
+				// {action:'Create an AngulaJS Web App',status:false},
+				// {action:'Learn Python',status:true}
 			]
 
 			$scope.addTask = function addTask(){
 				$scope.toDoList.push({action:$scope.task, status:true});
+				$scope.init();
+			};
+
+			$scope.deleteTask = function deleteTask(id){
+				console.info("delete index", id, $scope.toDoList[id]);
+				$scope.toDoList.splice(id, 1);
+			};
+
+			//Validation function not working when input value is removed using backspaces
+			$scope.checkInput = function checkInput(){
+				console.log("checkInput function called", $scope.task);
+				if($scope.task)
+				{
+					$scope.validInput = true;
+				}
+				else{
+					$scope.validInput = false;					
+				}
 			};
 
 		});
