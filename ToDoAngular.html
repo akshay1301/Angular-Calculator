@@ -35,7 +35,7 @@
 			<div class="col-md-4">
 				<div class="list-group-item">
 					<div class="checkbox">
-						<label><input type="checkbox" value="">{{list.action}}</label>
+						<label ng-style="doneStatus($index)"><input type="checkbox" ng-model="checkBoxModel" ng-change="updateTask($index)">{{list.action}}</label>
 					</div>
 				</div>
 			</div>
@@ -48,10 +48,10 @@
 	(function (){
 		var app = angular.module('toDoApp',[]).
 		controller('toDoController',function($scope) {
-			console.log("Controller was loaded !");
+			//console.log("Controller was loaded !");
 
 			$scope.init = function init(){
-				console.log("Init function called !")
+				//console.log("Init function called !")
 				$scope.task = null;
 				$scope.validInput = false;
 			};
@@ -62,8 +62,17 @@
 			]
 
 			$scope.addTask = function addTask(){
-				$scope.toDoList.push({action:$scope.task, status:true});
+				$scope.toDoList.push({action:$scope.task, doneFlag:false});
 				$scope.init();
+			};
+
+			$scope.updateTask = function updateTask(id){
+				if($scope.toDoList[id].doneFlag === false){
+					$scope.toDoList[id].doneFlag = true;
+				}
+				else if($scope.toDoList[id].doneFlag === true){
+					$scope.toDoList[id].doneFlag = false;
+				}
 			};
 
 			$scope.deleteTask = function deleteTask(id){
@@ -73,7 +82,7 @@
 
 			//Validation function not working when input value is removed using backspaces
 			$scope.checkInput = function checkInput(){
-				console.log("checkInput function called", $scope.task);
+				//console.log("checkInput function called", $scope.task);
 				if($scope.task)
 				{
 					$scope.validInput = true;
@@ -81,6 +90,17 @@
 				else{
 					$scope.validInput = false;					
 				}
+			};
+
+			$scope.doneStatus = function doneStatus(id){
+				console.log("doneStatus was called", $scope.toDoList[id].doneFlag);
+				$scope.mystyle = null;
+				if($scope.toDoList[id].doneFlag)
+				{
+					console.log("Status of doneFlag", $scope.toDoList[id].doneFlag);
+					$scope.mystyle = {'text-decoration': 'line-through'};
+				}
+				return $scope.mystyle;
 			};
 
 		});
